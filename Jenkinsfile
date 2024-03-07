@@ -1,11 +1,18 @@
-
 pipeline {
     agent any
 
     stages {
+        stage('Clone repository') {
+            steps {
+                checkout([$class: 'GitSCM', 
+                branches: [[name: '*/main']],
+                userRemoteConfigs: [[url: 'https://github.com/MalikRehan08/PES1UG21CS319_Jenkins.git']]])
+            }
+        }
+
         stage('Build') {
             steps {
-                build PES1UG21CS319-1
+                build 'PES1UG21CS319-1'
                 sh 'g++ main.cpp -o output'
             }
         }
